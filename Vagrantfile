@@ -6,9 +6,18 @@ Vagrant.configure("2") do |config|
     config.vm.box = "scotch/box"
     config.vm.network "private_network", ip: "192.168.33.10"
     config.vm.hostname = "scotchbox"
-    config.vm.synced_folder ".", "/var/www", :mount_options => ["dmode=777", "fmode=666"]
-    
+    config.vm.synced_folder ".", "/var/www", :mount_options => ["dmode=777", "fmode=775"]
+
     # Optional NFS. Make sure to remove other synced_folder line too
-    #config.vm.synced_folder ".", "/var/www", :nfs => { :mount_options => ["dmode=777","fmode=666"] }
+    # config.vm.synced_folder ".", "/var/www", :nfs => { :mount_options => ["dmode=777","fmode=775"]
+
+    config.vm.provider "virtualbox" do |v|
+      # Max 75% CPU Usage
+      v.customize ["modifyvm", :id, "--cpuexecutioncap", "75"]
+      # Max Memory 1GB
+      v.memory = 1024
+      # Max CPUs = 2
+      v.cpus = 2
+    end
 
 end
