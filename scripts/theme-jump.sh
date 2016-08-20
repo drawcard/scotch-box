@@ -1,5 +1,4 @@
-#!/bin/bash
-# This script lets you jump to the theme folder of a Wordpress website faster, and start Gulp.
+                                                                                                                                                                      #!/bin/bash
 
 # Choose from a list of websites
 # Thanks http://stackoverflow.com/a/3200362
@@ -13,18 +12,21 @@ printf "Please select a theme folder:\n"
 select d in */; do test -n "$d" && break; echo ">>> Invalid Selection"; done
 cd "$d" && pwd
 
-# Thanks http://askubuntu.com/a/56685
 echo "Pick a task:"
 echo "1) Gulp Watch (fast)";
 echo "2) Gulp Watch"; 
 echo "3) Gulp Clean, Build, Watch"; 
-echo "4) Do nothing (go to dir)";
+
+# Disable this option for now until we convert this script to work in ZSH.
+# echo "4) Do nothing (go to dir)";
 
 read n
 case $n in
-    1) gulp watch --fast;;
-    2) gulp watch;; 
-    3) gulp && gulp watch;;
-    4) pwd;;
-    *) pwd;;
+    1) echo "Running 'gulp watch' --fast in `pwd`..." && gulp watch --fast;;
+    2) echo "Running 'gulp watch' in `pwd`..." && gulp watch;; 
+    3) echo "Running 'gulp && gulp watch' in `pwd`..." && gulp && gulp watch;;
+#    4) git status;;
+#    *) git status;;
 esac
+
+pwd && git status
